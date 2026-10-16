@@ -1,6 +1,8 @@
 # GoForge — AI Backend Platform in Go
 
-GoForge is a backend engineering project for building an AI document-processing service with Go. Practice HTTP APIs, background jobs, databases, concurrency, and operating reliable services.
+GoForge is an AI backend platform built with Go, covering HTTP APIs, background workers, streaming, PostgreSQL, Redis, Kafka, and AI provider integrations. Practice backend development, concurrency, databases, distributed systems, AI infrastructure, and production engineering.
+
+See [the platform architecture](docs/architecture.md) for the product scope, component diagram, Go structure, and delivery stages.
 
 ## Current status
 
@@ -11,7 +13,7 @@ The starter uses Go’s standard library and includes:
 - Structured logs, HTTP timeouts, and graceful shutdown.
 - Commands for running, building, formatting, and checking the project.
 
-Document processing, persistence, workers, authentication, and AI provider integration are planned; they are not implemented yet.
+Persistence, workers, streaming, Redis, Kafka, authentication, and AI provider integration are planned; they are not implemented yet.
 
 ## Run locally
 
@@ -50,27 +52,15 @@ The starter has no automated tests yet. The test command is provided for future 
 
 ## Build plan
 
-Start with one repository containing an API and a worker, backed by PostgreSQL:
+Build the platform incrementally: API and PostgreSQL, background AI jobs, streaming, Redis, and Kafka. Add authentication, reliability checks, observability, and deployment support throughout development.
 
-```text
-Client -> Go HTTP API -> PostgreSQL (documents, jobs, results)
-                              ^
-                              |
-                          Go worker -> AI provider
-```
-
-1. Add document submission and job-status endpoints backed by PostgreSQL.
-2. Add a worker that claims persisted jobs and calls an AI provider to summarize documents.
-3. Handle timeouts, bounded concurrency, retries, and duplicate job execution.
-4. Add authentication, request limits, integration tests, and deployment configuration.
-5. Add progress streaming, metrics, and load testing.
-
-Add Redis when caching or distributed rate limiting is needed. Add Kafka when there is a concrete need for event distribution or replay.
+The [architecture document](docs/architecture.md) describes the full plan. Document processing is one possible example workload within this platform.
 
 ## Repository layout
 
 ```text
 cmd/api/main.go    HTTP API entry point
+docs/architecture.md Target platform architecture and implementation plan
 go.mod             Go module configuration
 Makefile           Development commands
 ```
